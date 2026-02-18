@@ -31,3 +31,31 @@ The server operates on a **Single-Broadcaster, Multi-Worker** model:
 ```bash
 git clone https://github.com
 cd tcp_chat-server
+```
+2. **Run the server:**
+```bash
+go run main.go
+```
+## 🔌 Connecting to the Chat
+
+Open multiple terminal windows and connect using one of the following methods:
+
+**Using Netcat (Recommended):**
+```bash
+nc localhost 8080
+```
+**Using the included Go Client:**
+```bash
+go run client.go
+```
+## 💻 Technical Highlights for Interviewers
+
+* **Concurrency Model:** I utilized **Communicating Sequential Processes (CSP)** patterns. Instead of sharing memory by locking every action, I used channels to communicate state changes.
+* **Resource Management:** Implemented `deferred` connection closures to ensure no socket leaks occur, even if a Goroutine panics.
+* **Scalability:** By avoiding heavy OS threads and using Goroutines, this server maintains a minimal memory footprint (approx. 2KB per connection).
+
+## 📝 Planned Improvements
+
+- [ ] **Room Support:** Implement `/join #roomname` logic.
+- [ ] **Data Persistence:** Log chat history to a Redis or PostgreSQL instance.
+- [ ] **TLS Encryption:** Secure the raw TCP stream with SSL/TLS certificates.
